@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GrandSiter</string>
+    <string name="txt_login">Tvac Studio
+        Login Screeen</string>
+    <string name="username">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="sign_in">로그인</string>
+    <string name="forgot_password">비밀번호 찾기</string>
+    <string name="need_a_new_account">회원가입</string>
+    <string name="button">Button</string>
+    <string name="edittext_hint1"><font size="14">비밀번호(영문 숫자 조합(8~15)</font></string>
+</resources>

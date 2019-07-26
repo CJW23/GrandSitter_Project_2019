@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".AddGrandActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="100dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/adtb"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="환자 등록"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+        </android.support.v7.widget.Toolbar>
+
+        <EditText
+            android:id="@+id/addGrName"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:hint="이름"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/addGrCharacteristic"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:hint="질환"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:text="성별"
+            android:textSize="18sp" />
+
+        <RadioGroup
+            android:id="@+id/addGrGender"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/menbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="남성" />
+
+            <RadioButton
+                android:id="@+id/womanbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="여성" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/birth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:text="생년월일"
+            android:textSize="18sp" />
+
+        <DatePicker
+            android:id="@+id/addGrAge"
+            style="@android:style/Widget.Holo.DatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alwaysDrawnWithCache="false"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:scrollbarStyle="outsideInset" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/addGrBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:background="@drawable/shadow"
+            android:elevation="10dp"
+            android:text="등록"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+</LinearLayout>
