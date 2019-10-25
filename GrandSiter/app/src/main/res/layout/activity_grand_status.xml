@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="노인 상태"
+            android:text="환자 상태"
             android:textSize="28sp"
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
@@ -28,12 +28,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
+        android:fillViewport="false"
         android:minHeight="3000dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -60,7 +60,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -76,13 +76,12 @@
                 <Button
                     android:id="@+id/scheAdd"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:layout_weight="1"
                     android:gravity="top|right"
                     android:text="일정추가>"
                     android:textSize="18sp" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -94,15 +93,15 @@
                     android:id="@+id/sc_recycle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp">
 
                 </android.support.v7.widget.RecyclerView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -118,7 +117,7 @@
                 <Button
                     android:id="@+id/mediAdd"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="top|right"
                     android:text="약시간 추가>"

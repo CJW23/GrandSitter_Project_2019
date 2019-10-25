@@ -1,24 +1,21 @@
 package GrandSiter.yjd.com.GrandSiter;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddMediRequest extends StringRequest {
-
+public class DeleteGrandRequest extends StringRequest{
     //private static final String URL = "http://192.168.0.21/addmedi.php";
-    private static final String URL = "https://sammaru.cbnu.ac.kr/grandsitters/addmedi.php";
+    private static final String URL = "https://sammaru.cbnu.ac.kr/grandsitters/deletegrand.php";
     private Map<String, String> param;
 
-    public AddMediRequest(String id, String name, String des, String date, Response.Listener<String> listener) {
-        super(Method.POST, URL, listener, null);
+    public DeleteGrandRequest(String id, Response.Listener<String> listener) {
+        super(Request.Method.POST, URL, listener, null);
         param = new HashMap<>();
         param.put("grandId", id);
-        param.put("mediName", name);
-        param.put("mediDes", des);
-        param.put("mediDate", date);
     }
 
     @Override

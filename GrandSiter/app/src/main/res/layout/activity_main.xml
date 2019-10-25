@@ -76,15 +76,6 @@
 
 
             <TextView
-                android:id="@+id/txtBaby"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/forgot_password"
-                android:textColor="#f1f1f1" />
-
-            <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

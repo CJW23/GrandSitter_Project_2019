@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class AddScheRequest extends StringRequest{
 
-    //private static final String URL = "http://175.212.26.202:3389/addsche.php";
-    private static final String URL = "http://192.168.0.21/addsche.php";
+    private static final String URL = "https://sammaru.cbnu.ac.kr/grandsitters/addsche.php";
+    //private static final String URL = "http://192.168.0.21/addsche.php";
     private Map<String, String> param;
 
     public AddScheRequest(String id, String name, String des, String date, Response.Listener<String> listener) {

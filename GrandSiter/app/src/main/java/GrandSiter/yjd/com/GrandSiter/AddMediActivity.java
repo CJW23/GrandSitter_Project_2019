@@ -61,7 +61,6 @@ public class AddMediActivity extends AppCompatActivity {
                 tmpMin = mediTimePicker.getMinute();
                 tmpDate = tmpHour+"시 "+tmpMin+"분";
 
-                Log.d("medi : ", tmpName+"  "+tmpDate+"  "+tmpDes);
                 if(tmpName.equals("") || tmpDes.equals("") || tmpDate.equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddMediActivity.this);
                     dialog = builder.setMessage("빈 공간이 있습니다.")
@@ -78,7 +77,8 @@ public class AddMediActivity extends AppCompatActivity {
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AddMediActivity.this);
-                                dialog = builder.setMessage("등록 성공")
+                                dialog = builder.setMessage("삭제 성공")
+                                        .setCancelable(false)
                                         .setPositiveButton("확인", null)
                                         .create();
                                 dialog.show();
@@ -87,6 +87,7 @@ public class AddMediActivity extends AppCompatActivity {
                             else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AddMediActivity.this);
                                 dialog = builder.setMessage("등록 실패")
+                                        .setCancelable(false)
                                         .setNegativeButton("확인", null)
                                         .create();
                                 dialog.show();

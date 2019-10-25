@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class AddGrandRequest extends StringRequest{
 
-    //private static final String URL = "http://175.212.26.202:3389/addgr.php";
-    private static final String URL = "http://192.168.0.21/addgr.php";
+    private static final String URL = "https://sammaru.cbnu.ac.kr/grandsitters/addgr.php";
+    //private static final String URL = "http://192.168.0.21/addgr.php";
     private Map<String, String> param;
 
     public AddGrandRequest(String grName, String grAge, String grGender, String grCh, String userID, Response.Listener<String>listener) {

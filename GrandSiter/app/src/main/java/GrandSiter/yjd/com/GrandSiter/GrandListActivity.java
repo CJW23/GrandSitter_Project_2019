@@ -1,7 +1,10 @@
 package GrandSiter.yjd.com.GrandSiter;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -56,6 +60,7 @@ public class GrandListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         listItem = new ArrayList<>();
+
         new GetData().execute();
     }
 
@@ -65,28 +70,50 @@ public class GrandListActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {       //뒤로가기 버튼 누를시 종료 여부
+        final AlertDialog.Builder alertdialog = new AlertDialog.Builder(this);
+        alertdialog.setMessage("종료하시겠습니까?").setCancelable(false).
+                setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finishAffinity();
+
+                        //Service 종료
+                        Intent intent = new Intent(
+                                getApplicationContext(),
+                                NotiService.class);
+                        stopService(intent);        //onDestroy 호출
+                    }
+                }).
+                setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alert = alertdialog.create();
+        alert.setTitle("종료");
+        alert.show();
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         //return super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.add:
-                // User chose the "Settings" item, show the app settings UI...
                 Intent addGrand = new Intent(GrandListActivity.this, AddGrandActivity.class);
                 addGrand.putExtra("userID", userID);
                 GrandListActivity.this.startActivity(addGrand);
-                Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
         }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        Log.d("toolbar","123");
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
 
@@ -99,8 +126,8 @@ public class GrandListActivity extends AppCompatActivity {
         protected void onPreExecute(){
             super.onPreExecute();
             try {
-                //target = "http://175.212.26.202:3389/grantlist.php";
-                target = "http://192.168.0.21/grantlist.php";
+                target = "https://sammaru.cbnu.ac.kr/grandsitters/grantlist.php";
+                //target = "http://192.168.0.21/grantlist.php";
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -121,7 +148,7 @@ public class GrandListActivity extends AppCompatActivity {
                             item.getString("gender"), item.getString("characteristic")));
                 }
 
-                adapter = new GrandListAdapter(listItem, getApplicationContext());
+                adapter = new GrandListAdapter(listItem, GrandListActivity.this);
                 recyclerView.setAdapter(adapter);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -176,10 +203,8 @@ public class GrandListActivity extends AppCompatActivity {
             } catch (Exception e) {
 
                 errorString = e.toString();
-
                 return null;
             }
-
         }
     }
 

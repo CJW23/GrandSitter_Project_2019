@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -103,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     private void login(){
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -117,7 +120,10 @@ public class MainActivity extends AppCompatActivity {
                         //자동로그인을 로그인정보저장
                         //AutoLoginCheck();
                         //AutoLogin();
+
+                        //모든 알림 서비스 로그인과 동시에 실행.
                         Intent sensorServiceIntent = new Intent(MainActivity.this, NotiService.class);
+
                         sensorServiceIntent.putExtra("userID", userID);
                         startService(sensorServiceIntent);
 
@@ -125,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this,GrandListActivity.class); //mainactivity로 넘어가기 전에 Intent에 넣음
                         intent.putExtra("userID",userID);
                         intent.putExtra("userName",userName);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         MainActivity.this.startActivity(intent);
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

@@ -1,13 +1,24 @@
 package GrandSiter.yjd.com.GrandSiter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -45,6 +56,7 @@ public class GrandListAdapter extends RecyclerView.Adapter<GrandListAdapter.View
         holder.gender.setText("성별 : " + listItem.getGender());
         holder.chracteristic.setText("질환 : " + listItem.getCharacteristic());
 
+        //클릭했을 시 노인 정보창 이
         holder.mView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -56,6 +68,47 @@ public class GrandListAdapter extends RecyclerView.Adapter<GrandListAdapter.View
                 intent.putExtra("ch", listItem.getCharacteristic());
 
                 context.startActivity(intent);
+            }
+        });
+        //길게 터치 시 삭제/수정 여부
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                final AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
+
+                //환자 삭제시 Http 통신
+                alertdialog.setMessage("환자를 삭제하시겠습니까?").setCancelable(false).
+                        setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try{
+                                            Intent intent = ((Activity)context).getIntent();
+                                            ((Activity)context).finish();
+                                            ((Activity)context).startActivity(intent);
+                                        }
+                                        catch (Exception e){
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                DeleteGrandRequest deleteGrandRequest = new DeleteGrandRequest(listItem.getId(), responseListener);
+                                RequestQueue qu = Volley.newRequestQueue(context);
+                                qu.add(deleteGrandRequest);
+                            }
+                        }).
+                        setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog alert = alertdialog.create();
+                alert.setTitle("알림");
+                alert.show();
+                return false;
             }
         });
     }

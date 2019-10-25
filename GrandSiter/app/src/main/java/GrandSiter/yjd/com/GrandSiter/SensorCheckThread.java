@@ -28,7 +28,6 @@ public class SensorCheckThread extends Thread {
     public SensorCheckThread(Handler handler){
         this.handler = handler;
         response = 0;
-
     }
     public void run(){
         while(isRun){
@@ -37,15 +36,18 @@ public class SensorCheckThread extends Thread {
                 if(response == 1){  //대변 확정
                     Message msg = handler.obtainMessage();
                     msg.what = 0;
-                    msg.obj = notiText;
+                    msg.obj = notiText;     //알림 메세지 내
                     handler.sendMessage(msg);    //Notification 생성하는 서비스
-                    response=0;
+                    response=0;             //대소벼 데이터 알림을 보냈으므로 응답 복귀.
                 }
-
                 Thread.sleep(5000); //초씩 쉰다.
             }catch (Exception e) {}
         }
     }
+    public void end(){
+        isRun = false;
+    }
+    //모든 환자의 대소변 상태 체크 -> elderno를 쓰지 않음.
     private class SensorCheck extends AsyncTask<String, Void, String> {
         String errorString = null;
         String target;
@@ -54,9 +56,8 @@ public class SensorCheckThread extends Thread {
         protected void onPreExecute(){
             super.onPreExecute();
             try {
-                //target = "http://175.212.26.202:3389/sensorcheck.php";
-                target = "http://192.168.0.21/sensorcheck.php";
-
+                //대소변 데이터가 있는지 체크하는 php
+                target = "https://sammaru.cbnu.ac.kr/grandsitters/sensorcheck.php";
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -68,12 +69,12 @@ public class SensorCheckThread extends Thread {
             super.onPostExecute(result);
             try{
                 JSONObject jsonObject = new JSONObject(result);
-                response = jsonObject.getInt("flag");
+                response = jsonObject.getInt("flag");   //flag는 0아니면 1값이 온다.
                 name = jsonObject.getString("name");
-                if(response == 1){
-                    notiText = name+" 환자 기저귀 교체해주시기 바랍니다.";
+                if(response == 1) {  //flag=1이면 대소변 판단.
+                    //알림에 쓸 내
+                    notiText = name + " 환자 기저귀 교체해주시기 바랍니다.";
                 }
-                //Log.d("sensorflag : ", Integer.toString(response));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -97,9 +98,6 @@ public class SensorCheckThread extends Thread {
 
                 //서버로 전송
                 StringBuffer buffer = new StringBuffer();
-
-                //이 부분에 elderno 대입
-                //buffer.append("elderno").append("=").append(grId);                 // php 변수에 값 대입
 
                 OutputStreamWriter outStream = new OutputStreamWriter(httpURLConnection.getOutputStream(), "UTF-8");
                 PrintWriter writer = new PrintWriter(outStream);

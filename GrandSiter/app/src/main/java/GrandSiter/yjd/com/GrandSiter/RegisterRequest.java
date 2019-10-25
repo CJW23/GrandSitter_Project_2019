@@ -11,8 +11,8 @@ import java.util.Map;
 
 
 public class RegisterRequest extends StringRequest {
-    //final static private String URL = "http://175.212.26.202:3389/register.php";
-   final static private String URL = "http://192.168.0.21/register.php";
+    final static private String URL = "https://sammaru.cbnu.ac.kr/grandsitters/register.php";
+    //final static private String URL = "http://192.168.0.21/register.php";
 
     private Map<String,String> parameters;
 

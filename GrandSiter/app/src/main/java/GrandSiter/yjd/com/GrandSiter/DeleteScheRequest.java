@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DeleteScheRequest extends StringRequest{
-    //private static final String URL = "http://175.212.26.202:3389/deletesche.php";
-    private static final String URL = "http://192.168.0.21/deletesche.php";
+    private static final String URL = "https://sammaru.cbnu.ac.kr/grandsitters/deletesche.php";
     private Map<String, String> param;
     public DeleteScheRequest(String id, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);

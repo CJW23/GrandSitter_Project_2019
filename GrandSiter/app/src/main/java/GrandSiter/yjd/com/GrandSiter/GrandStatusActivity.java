@@ -88,6 +88,7 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         super.onCreate(savedInstanceState);
     }
 
+    //일정 추가, 약 복용 버튼
     void buttonListen(){
         scheAdd.setOnClickListener(new View.OnClickListener(){
 
@@ -241,8 +242,8 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         protected void onPreExecute(){
             super.onPreExecute();
             try {
-               //target = "http://175.212.26.202:3389/schedule.php";
-                target = "http://192.168.0.21/schedule.php";
+               target = "https://sammaru.cbnu.ac.kr/grandsitters/schedule.php";
+               //target = "http://192.168.0.21/schedule.php";
 
             }
             catch (Exception e){
@@ -334,8 +335,8 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         protected void onPreExecute(){
             super.onPreExecute();
             try {
-                //target = "http://175.212.26.202:3389/medicine.php";
-                target = "http://192.168.0.21/medicine.php";
+                target = "https://sammaru.cbnu.ac.kr/grandsitters/medicine.php";
+                //target = "http://192.168.0.21/medicine.php";
 
             }
             catch (Exception e){
@@ -427,8 +428,8 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         protected void onPreExecute(){
             super.onPreExecute();
             try {
-                //target = "http://175.212.26.202:3389/fecesdata.php";
-                target = "http://192.168.0.21/fecesdata.php";
+                target = "https://sammaru.cbnu.ac.kr/grandsitters/fecesdata.php";
+                //target = "http://192.168.0.21/fecesdata.php";
 
             }
             catch (Exception e){
@@ -475,6 +476,7 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
                 //서버로 전송
                 StringBuffer buffer = new StringBuffer();
 
+                Log.d("subalwhy : ", grId);
                 //이 부분에 elderno 대입
                 buffer.append("grandID").append("=").append(grId);                 // php 변수에 값 대입
 
@@ -518,8 +520,8 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         protected void onPreExecute(){
             super.onPreExecute();
             try {
-                //target = "http://175.212.26.202:3389/peedata.php";
-                target = "http://192.168.0.21/peedata.php";
+                target = "https://sammaru.cbnu.ac.kr/peedata.php";
+                //target = "http://192.168.0.21/peedata.php";
 
             }
             catch (Exception e){

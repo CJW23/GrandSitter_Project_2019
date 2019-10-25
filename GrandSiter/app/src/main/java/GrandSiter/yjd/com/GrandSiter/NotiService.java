@@ -1,3 +1,6 @@
+/*
+설명 : 로그인시 실행될 서비스
+ */
 package GrandSiter.yjd.com.GrandSiter;
 
 import android.app.Service;
@@ -21,7 +24,10 @@ public class NotiService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
         myServiceHandler handler = new myServiceHandler();
+
+        //로그인 id 가져오기
         userID = (String) intent.getExtras().get("userID");
+
         n = new NotificationHelper(NotiService.this);
         mediCheckThread = new MediCheckThread(handler);
         sensorCheckThread = new SensorCheckThread(handler);
@@ -34,19 +40,23 @@ public class NotiService extends Service {
 
     }
     public void onDestroy() {
+        //로그아웃시 thread 해제
+        sensorCheckThread.end();
+        mediCheckThread.end();
+        locateCheckThread.end();
+
         sensorCheckThread = null;
         mediCheckThread = null;
-
+        locateCheckThread = null;
+        super.onDestroy();
     }
 
     class myServiceHandler extends Handler {
         StringBuilder name;
         StringBuilder mediItem;
+
         @Override
         public void handleMessage(android.os.Message msg) {
-            //Log.d("msg : ", Integer.toString(msg.what));
-
-
             if(msg.what == 0) {
                n.createNotification("기저귀 교체 요청", msg.obj.toString());
             }
@@ -58,8 +68,7 @@ public class NotiService extends Service {
             else if(msg.what == 2){
                 n.createNotification("위치 확인 요청", msg.obj.toString());
             }
-            //토스트 띄우기
-            //Toast.makeText(MyService.this, "뜸?", Toast.LENGTH_LONG).show();
+
         }
     };
 

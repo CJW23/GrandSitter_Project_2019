@@ -47,6 +47,9 @@ public class LocateCheckThread extends Thread{
             }catch (Exception e) {}
         }
     }
+    public void end(){
+        isRun = false;
+    }
     private class LocateCheck extends AsyncTask<String, Void, String> {
         String errorString = null;
         String target;
@@ -55,8 +58,8 @@ public class LocateCheckThread extends Thread{
         protected void onPreExecute(){
             super.onPreExecute();
             try {
-                //target = "http://175.212.26.202:3389/locatecheck.php";
-                target = "http://192.168.0.21/locatecheck.php";
+                target = "https://sammaru.cbnu.ac.kr/grandsitters/locatecheck.php";
+                //target = "http://192.168.0.21/locatecheck.php";
 
             }
             catch (Exception e){
@@ -108,7 +111,7 @@ public class LocateCheckThread extends Thread{
                 StringBuffer buffer = new StringBuffer();
 
                 //이 부분에 elderno 대입
-                Log.d("locUserId : ", userID);
+                //Log.d("locUserId : ", userID);
                 buffer.append("userID").append("=").append(userID);                 // php 변수에 값 대입
 
                 OutputStreamWriter outStream = new OutputStreamWriter(httpURLConnection.getOutputStream(), "UTF-8");

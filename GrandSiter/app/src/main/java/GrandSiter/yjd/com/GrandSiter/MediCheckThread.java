@@ -48,6 +48,9 @@ public class MediCheckThread extends Thread{
             }catch (Exception e) {}
         }
     }
+    public void end(){
+        isRun = false;
+    }
     private class MediCheck extends AsyncTask<String, Void, String> {
         String errorString = null;
         String target;
@@ -56,8 +59,8 @@ public class MediCheckThread extends Thread{
         protected void onPreExecute(){
             super.onPreExecute();
             try {
-                //target = "http://175.212.26.202:3389/medicheck.php";
-                target = "http://192.168.0.21/medicheck.php";
+                target = "https://sammaru.cbnu.ac.kr/grandsitters/medicheck.php";
+                //target = "http://192.168.0.21/medicheck.php";
 
             }
             catch (Exception e){

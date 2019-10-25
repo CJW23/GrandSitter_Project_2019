@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ValidateRequest extends StringRequest {
-    //final static private String URL="http://175.212.26.202:3389/idvalidate.php";
-    final static private String URL="http://192.168.0.21/idvalidate.php";
+    final static private String URL="https://sammaru.cbnu.ac.kr/grandsitters/idvalidate.php";
+    //final static private String URL="http://192.168.0.21/idvalidate.php";
 
     private Map<String,String> parameters;
 
