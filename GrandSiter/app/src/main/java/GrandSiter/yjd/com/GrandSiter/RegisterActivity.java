@@ -1,9 +1,8 @@
 package GrandSiter.yjd.com.GrandSiter;
 
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,8 +18,6 @@ import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import GrandSiter.yjd.com.GrandSiter.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

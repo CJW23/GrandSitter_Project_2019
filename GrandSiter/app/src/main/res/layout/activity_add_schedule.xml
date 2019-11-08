@@ -15,7 +15,7 @@
         android:layout_marginRight="100dp"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/adtb"
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -28,7 +28,7 @@
                 android:text="일정 추가"
                 android:textSize="28sp"
                 android:textStyle="bold" />
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
         <EditText
             android:id="@+id/scheTitle"

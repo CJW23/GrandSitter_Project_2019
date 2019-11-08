@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +22,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 import java.util.List;
-
-import GrandSiter.yjd.com.GrandSiter.R;
 
 public class MediListAdapter extends RecyclerView.Adapter<MediListAdapter.ViewHolder>{
 

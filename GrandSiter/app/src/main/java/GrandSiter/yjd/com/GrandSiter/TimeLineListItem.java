@@ -1,6 +1,5 @@
 package GrandSiter.yjd.com.GrandSiter;
 
-import android.support.annotation.NonNull;
 
 public class TimeLineListItem{
     private String time;

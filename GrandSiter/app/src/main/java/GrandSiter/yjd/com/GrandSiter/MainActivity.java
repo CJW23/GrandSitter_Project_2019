@@ -6,10 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -21,8 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
-
-import GrandSiter.yjd.com.GrandSiter.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Intent intent = new Intent(MainActivity.this, TimeLineActivity.class); //mainactivity로 넘어가기 전에 Intent에 넣음
-        //MainActivity.this.startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, PhysiologyDetailActivity.class); //mainactivity로 넘어가기 전에 Intent에 넣음
+        MainActivity.this.startActivity(intent);
 
         alpha = (Button)findViewById(R.id.login);
         alpha.getBackground().setAlpha(80);

@@ -3,19 +3,18 @@ package GrandSiter.yjd.com.GrandSiter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,8 +29,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import GrandSiter.yjd.com.GrandSiter.R;
 
 public class GrandListActivity extends AppCompatActivity {
 
@@ -55,7 +52,7 @@ public class GrandListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         //어댑터를 통해 노인 리스트 출력.
-        adapter = new GrandListAdapter(listItem, this);
+        //adapter = new GrandListAdapter(listItem, this);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -119,6 +116,7 @@ public class GrandListActivity extends AppCompatActivity {
 
         return true;
     }
+
     private class GetData extends AsyncTask<String, Void, String>{
         String errorString = null;
         String target;
@@ -150,6 +148,7 @@ public class GrandListActivity extends AppCompatActivity {
 
                 adapter = new GrandListAdapter(listItem, GrandListActivity.this);
                 recyclerView.setAdapter(adapter);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

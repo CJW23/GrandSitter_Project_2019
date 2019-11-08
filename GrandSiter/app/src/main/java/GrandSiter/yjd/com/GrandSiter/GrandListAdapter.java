@@ -1,24 +1,23 @@
 package GrandSiter.yjd.com.GrandSiter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import org.json.JSONObject;
+
 import java.util.List;
-import GrandSiter.yjd.com.GrandSiter.R;
 
 public class GrandListAdapter extends RecyclerView.Adapter<GrandListAdapter.ViewHolder>{
 
