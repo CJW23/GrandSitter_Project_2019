@@ -19,25 +19,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme_NoActionBar">
-        <activity android:name="GrandSiter.yjd.com.GrandSiter.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="GrandSiter.yjd.com.GrandSiter.RegisterActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".JoinActivity" />
-        <activity android:name="GrandSiter.yjd.com.GrandSiter.GrandListActivity" />
-        <activity android:name="GrandSiter.yjd.com.GrandSiter.AddGrandActivity" />
-        <activity android:name="GrandSiter.yjd.com.GrandSiter.GrandStatusActivity" />
-        <activity android:name="GrandSiter.yjd.com.GrandSiter.AddScheduleActivity" />
-        <activity android:name="GrandSiter.yjd.com.GrandSiter.AddMediActivity" />
+        <activity android:name=".GrandListActivity" />
+        <activity android:name=".AddGrandActivity" />
+        <activity android:name=".GrandStatusActivity" />
+        <activity android:name=".AddScheduleActivity" />
+        <activity android:name=".AddMediActivity" />
 
         <service
-            android:name="GrandSiter.yjd.com.GrandSiter.NotiService"
+            android:name=".NotiService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
     </application>
 
 </manifest>

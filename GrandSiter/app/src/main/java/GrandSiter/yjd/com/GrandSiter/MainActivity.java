@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Intent intent = new Intent(MainActivity.this, TimeLineActivity.class); //mainactivity로 넘어가기 전에 Intent에 넣음
+        //MainActivity.this.startActivity(intent);
+
         alpha = (Button)findViewById(R.id.login);
         alpha.getBackground().setAlpha(80);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); //키보드 화면가리기방지

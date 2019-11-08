@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baoyachi.stepview.VerticalStepView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -41,25 +44,28 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import GrandSiter.yjd.com.GrandSiter.R;
 
 public class GrandStatusActivity extends AppCompatActivity implements OnChartValueSelectedListener{
-
+    private static final int MEDI=10, SCHE=11;
     private LineChart mChart;
     private int loadingFlag;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter adapter, adapter2;
     private RecyclerView recyclerView2;
-    private RecyclerView.Adapter adapter2;
-    private List<ScheduleListItem> listItem;
-    private List<MediListItem> mediListItem;
+    private TimelineAdapter adapter1;
+    private List<TimeLineListItem> scheListItem;
+    private List<TimeLineListItem> mediListItem;
     private ProgressDialog dialog;
     private Button scheAdd;
     private Button mediAdd;
     private ArrayList<GraphDataItem> graphDataItems;
     private ArrayList<GraphDataItem> graphDataItems1;
+    private VerticalStepView verticalStepView;
     String grName, grGender, grAge, grCh, grId;
     TextView elder_name;
 
@@ -111,23 +117,20 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
     }
 
     void setRecycleView(){
-        adapter = new ScheduleListAdapter(listItem, this);
-        adapter2 = new MediListAdapter(mediListItem, this);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-
-        recyclerView = (RecyclerView) findViewById(R.id.sc_recycle);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView = (RecyclerView) findViewById(R.id.scherecycler);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager1);
 
-
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView2 = (RecyclerView) findViewById(R.id.medi_recycle);
+        recyclerView2 = (RecyclerView) findViewById(R.id.medirecycler);
         recyclerView2.setHasFixedSize(true);
-        recyclerView2.setLayoutManager(layoutManager);
+        recyclerView2.setLayoutManager(layoutManager2);
 
-        listItem = new ArrayList<>();
+        scheListItem = new ArrayList<>();
         mediListItem = new ArrayList<>();
+
         graphDataItems = new ArrayList<>();
         graphDataItems1 = new ArrayList<>();
     }
@@ -179,6 +182,10 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
 
         List<PieEntry> yvalues = new ArrayList<PieEntry>();
         List<PieEntry> yvalues1 = new ArrayList<PieEntry>();
+        if(graphDataItems.isEmpty())
+            graphDataItems.add(new GraphDataItem("데이터 없음", 0));
+        if(graphDataItems1.isEmpty())
+            graphDataItems1.add(new GraphDataItem("데이터 없음", 0));
         for(int i=0; i<graphDataItems.size(); i++){
             Log.d("awdawd : ", graphDataItems.get(i).getDate());
             yvalues.add(new PieEntry(graphDataItems.get(i).getNum(), graphDataItems.get(i).getDate()));
@@ -253,7 +260,6 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         @Override
         protected void onPostExecute(String result){
             super.onPostExecute(result);
-
             try{
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("scjson");
@@ -261,13 +267,13 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
                 //DB에서 가져온 노인 정보를 저장
                 for(int i=0; i<jsonArray.length(); i++){
                     JSONObject item = jsonArray.getJSONObject(i);
-                    listItem.add(new ScheduleListItem("제목 : " + item.getString("name"), "일정 : " + item.getString("time"),
-                            "내용 : " + item.getString("des"), item.getString("id")));
+                    scheListItem.add(new TimeLineListItem(item.getString("time"), item.getString("des"), item.getString("id")));
                 }
 
-                adapter = new ScheduleListAdapter(listItem, GrandStatusActivity.this);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                adapter1 = new TimelineAdapter(LinearLayoutManager.VERTICAL, scheListItem, GrandStatusActivity.this, SCHE);
+                recyclerView.setAdapter(adapter1);
+                adapter1.notifyDataSetChanged();
+
                 loadingFlag++;
 
             } catch (JSONException e) {
@@ -355,11 +361,15 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
                 //DB에서 가져온 노인 정보를 저장
                 for(int i=0; i<jsonArray.length(); i++){
                     JSONObject item = jsonArray.getJSONObject(i);
-                    mediListItem.add(new MediListItem("약 이름 : " + item.getString("name"), "복용 시간 : " + item.getString("time"), "설명 : " + item.getString("des"),item.getString("id")));
+                    mediListItem.add(new TimeLineListItem(item.getString("time"), item.getString("des"), item.getString("id")));
+                    Log.d("idcheck : ", item.getString("id"));
                 }
-                adapter2 = new MediListAdapter(mediListItem, GrandStatusActivity.this);
+
+                adapter2 = new TimelineAdapter(LinearLayoutManager.VERTICAL, mediListItem, GrandStatusActivity.this, MEDI);
                 recyclerView2.setAdapter(adapter2);
                 adapter2.notifyDataSetChanged();
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -441,10 +451,10 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         protected void onPostExecute(String result){
             super.onPostExecute(result);
             try{
-                Log.d("status : ", result);
+
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("graphdate");
-
+                Log.d("statussss : ", Integer.toString(jsonArray.length()));
                 //DB에서 가져온 노인 정보를 저장
                 for(int i=0; i<jsonArray.length(); i++){
                     JSONObject item = jsonArray.getJSONObject(i);
@@ -520,7 +530,7 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         protected void onPreExecute(){
             super.onPreExecute();
             try {
-                target = "https://sammaru.cbnu.ac.kr/peedata.php";
+                target = "https://sammaru.cbnu.ac.kr/grandsitters/peedata.php";
                 //target = "http://192.168.0.21/peedata.php";
 
             }
@@ -542,6 +552,7 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
                     JSONObject item = jsonArray.getJSONObject(i);
                     graphDataItems1.add(new GraphDataItem(item.getString("date").substring(5), item.getInt("num")));
                 }
+
                 makeChart();
             } catch (JSONException e) {
                 e.printStackTrace();

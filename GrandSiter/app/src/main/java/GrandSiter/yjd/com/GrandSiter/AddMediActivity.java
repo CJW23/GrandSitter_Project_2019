@@ -9,13 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONObject;
-
 import GrandSiter.yjd.com.GrandSiter.R;
 
 public class AddMediActivity extends AppCompatActivity {
@@ -41,10 +38,17 @@ public class AddMediActivity extends AppCompatActivity {
         grandId = intent.getExtras().getString("id");
         Log.d("grandID : ", grandId);
     }
+
     void setEditText(){
         mediNameText = (EditText)findViewById(R.id.MediTitle);
         mediDesText = (EditText)findViewById(R.id.MediDes);
         mediTimePicker = (TimePicker) findViewById(R.id.MediTime);
+        mediTimePicker.setIs24HourView(true);
+    }
+    String timeFormat(String str){
+        if(str.length() == 1)
+            str = "0" + str;
+        return str;
     }
     void setButton(){
         mediAddBtn = (Button)findViewById(R.id.addMediBtn);
@@ -52,14 +56,14 @@ public class AddMediActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                String tmpName, tmpDes, tmpDate;
-                int tmpHour, tmpMin;
+                String tmpHour, tmpMin, tmpName, tmpDes, tmpDate;
 
                 tmpName = mediNameText.getText().toString();
                 tmpDes = mediDesText.getText().toString();
-                tmpHour = mediTimePicker.getHour();
-                tmpMin = mediTimePicker.getMinute();
-                tmpDate = tmpHour+"시 "+tmpMin+"분";
+                tmpHour = timeFormat(Integer.toString(mediTimePicker.getHour()));
+                tmpMin = timeFormat(Integer.toString(mediTimePicker.getMinute()));
+
+                tmpDate = tmpHour+" : "+tmpMin;
 
                 if(tmpName.equals("") || tmpDes.equals("") || tmpDate.equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddMediActivity.this);
@@ -103,7 +107,6 @@ public class AddMediActivity extends AppCompatActivity {
                 AddMediRequest addMediRequest = new AddMediRequest(grandId, tmpName, tmpDes, tmpDate, responseListener);
                 RequestQueue qu = Volley.newRequestQueue(AddMediActivity.this);
                 qu.add(addMediRequest);
-
             }
         });
     }

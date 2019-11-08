@@ -12,16 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONObject;
-
 import java.util.List;
-
 import GrandSiter.yjd.com.GrandSiter.R;
 
 public class GrandListAdapter extends RecyclerView.Adapter<GrandListAdapter.ViewHolder>{
@@ -37,18 +33,17 @@ public class GrandListAdapter extends RecyclerView.Adapter<GrandListAdapter.View
     public void setListItems(List<GrandListItem> listItems) {
         this.listItems = listItems;
     }
-
     @NonNull
     @Override
     public GrandListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.grand_list_item, parent, false);
-        return new ViewHolder(v);
 
+        return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GrandListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final GrandListAdapter.ViewHolder holder, final int position) {
         final GrandListItem listItem = listItems.get(position);
 
         holder.name.setText(listItem.getName());
@@ -66,7 +61,6 @@ public class GrandListAdapter extends RecyclerView.Adapter<GrandListAdapter.View
                 intent.putExtra("gender", listItem.getGender());
                 intent.putExtra("age", listItem.getAge());
                 intent.putExtra("ch", listItem.getCharacteristic());
-
                 context.startActivity(intent);
             }
         });
@@ -75,7 +69,7 @@ public class GrandListAdapter extends RecyclerView.Adapter<GrandListAdapter.View
             @Override
             public boolean onLongClick(View view) {
                 final AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
-
+                Log.d("cdcdcdc : ", Integer.toString(position));
                 //환자 삭제시 Http 통신
                 alertdialog.setMessage("환자를 삭제하시겠습니까?").setCancelable(false).
                         setPositiveButton("예", new DialogInterface.OnClickListener() {
@@ -85,9 +79,9 @@ public class GrandListAdapter extends RecyclerView.Adapter<GrandListAdapter.View
                                     @Override
                                     public void onResponse(String response) {
                                         try{
-                                            Intent intent = ((Activity)context).getIntent();
-                                            ((Activity)context).finish();
-                                            ((Activity)context).startActivity(intent);
+                                            listItems.remove(holder.getAdapterPosition());
+                                            notifyItemRemoved(holder.getAdapterPosition());
+                                            notifyItemRangeChanged(holder.getAdapterPosition(), listItems.size());
                                         }
                                         catch (Exception e){
                                             e.printStackTrace();
@@ -123,7 +117,6 @@ public class GrandListAdapter extends RecyclerView.Adapter<GrandListAdapter.View
         public TextView age;
         public TextView gender;
         public TextView chracteristic;
-
         public final View mView;
 
         public ViewHolder(View itemView) {

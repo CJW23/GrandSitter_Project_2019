@@ -35,11 +35,11 @@ public class LocateCheckThread extends Thread{
         while(isRun){
             try{
                 new LocateCheck().execute();
-                if(response == 1){  //대변 확정
+                if(response == 1){  //위치 벗어남 확
                     Message msg = handler.obtainMessage();
                     msg.what = 2;
                     msg.obj = listItem;
-                    //handler.sendMessage(msg);    //Notification 생성하는 서비스
+                    handler.sendMessage(msg);    //Notification 생성하는 서비스
                     response=0;
                 }
 
@@ -76,7 +76,7 @@ public class LocateCheckThread extends Thread{
                 JSONObject jsonflag = jsonArray.getJSONObject(0);
                 listItem = new StringBuilder("");
                 restr = jsonflag.getString("name");
-                //Log.d("nono : ", restr);
+                Log.d("nono : ", restr);
                 if(!restr.equals("no")){
                     response = 1;
                     JSONObject item;
@@ -111,7 +111,7 @@ public class LocateCheckThread extends Thread{
                 StringBuffer buffer = new StringBuffer();
 
                 //이 부분에 elderno 대입
-                //Log.d("locUserId : ", userID);
+                Log.d("locUserId : ", userID);
                 buffer.append("userID").append("=").append(userID);                 // php 변수에 값 대입
 
                 OutputStreamWriter outStream = new OutputStreamWriter(httpURLConnection.getOutputStream(), "UTF-8");
