@@ -1,26 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".PhysiologyDetailActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/addtoolbarstatus"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginBottom="20dp"
-        android:background="#ffffff">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/elder_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="환자 상태"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.Toolbar>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/addtoolbarstatus"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="#ffffff">
+
+            <TextView
+                android:id="@+id/elder_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="세부 사항"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/phyRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <include layout="@layout/linegraph" />
+
+    </LinearLayout>
+
     <include layout="@layout/bottom_sheet" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -14,7 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/springgreen"
+        android:background="#456789"
         android:paddingEnd="8dp"
         android:paddingStart="8dp">
 
@@ -42,18 +42,10 @@
                 android:id="@+id/txtCantante"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="50 Cent"
+                android:text="날짜 선택"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtCancion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text="In da club"
-                android:textColor="@android:color/white" />
 
         </LinearLayout>
 

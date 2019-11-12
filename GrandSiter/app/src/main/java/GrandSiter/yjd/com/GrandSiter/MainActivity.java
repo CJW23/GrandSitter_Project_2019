@@ -33,33 +33,14 @@ public class MainActivity extends AppCompatActivity {
     EditText idText;
     EditText passwordText;
     Button alpha;
-   /* @Override
-    protected void onResume() {
-        super.onResume();
 
-        //자동 로그인 정보가져오기
-        settings=getSharedPreferences("settings",Activity.MODE_PRIVATE);    //데이터를 저장할 수 있는 함수
-        loginChecked=settings.getBoolean("loginChecked",false);
-        if(loginChecked){
-            userID=settings.getString("userID","");
-            idText.setText(userID);
-            userPassword=settings.getString("userPassword","");
-            passwordText.setText(userPassword);
-            login();
-            finish();
-        }else{
-            idText.setText("");
-            passwordText.setText("");
-        }
-
-    }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, PhysiologyDetailActivity.class); //mainactivity로 넘어가기 전에 Intent에 넣음
-        MainActivity.this.startActivity(intent);
+        //Intent intent = new Intent(MainActivity.this, PhysiologyDetailActivity.class); //mainactivity로 넘어가기 전에 Intent에 넣음
+        //MainActivity.this.startActivity(intent);
 
         alpha = (Button)findViewById(R.id.login);
         alpha.getBackground().setAlpha(80);
@@ -94,13 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 userPassword = passwordText.getText().toString().trim();
                 if(userID!=null&&!userID.isEmpty() && !userPassword.isEmpty()){
                     Intent intent = new Intent(MainActivity.this,GrandListActivity.class); //mainactivity로 넘어가기 전에 Intent에 넣음
-                    /*intent.putExtra("userID",userID);
-                    intent.putExtra("userPassword",userPassword);
-                    intent.putExtra("userName",userName);
-                    MainActivity.this.startActivity(intent);*/
                     login();
-                    //if(loginChecked)
-                    //finish();
                 }
             }
         });
@@ -117,10 +92,6 @@ public class MainActivity extends AppCompatActivity {
                     if (success) {
                         userID=jsonResponse.getString("userID"); //정보를 DB에서 가져옵니다.
                         userName = jsonResponse.getString("userName");
-
-                        //자동로그인을 로그인정보저장
-                        //AutoLoginCheck();
-                        //AutoLogin();
 
                         //모든 알림 서비스 로그인과 동시에 실행.
                         Intent sensorServiceIntent = new Intent(MainActivity.this, NotiService.class);

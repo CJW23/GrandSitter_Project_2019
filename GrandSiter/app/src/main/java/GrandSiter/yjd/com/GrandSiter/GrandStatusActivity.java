@@ -42,7 +42,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GrandStatusActivity extends AppCompatActivity implements OnChartValueSelectedListener{
+public class GrandStatusActivity extends AppCompatActivity{
     private static final int MEDI=10, SCHE=11;
     private LineChart mChart;
     private int loadingFlag;
@@ -109,7 +109,6 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
     }
 
     void setRecycleView(){
-
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView = (RecyclerView) findViewById(R.id.scherecycler);
@@ -174,10 +173,7 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
 
         List<PieEntry> yvalues = new ArrayList<PieEntry>();
         List<PieEntry> yvalues1 = new ArrayList<PieEntry>();
-        if(graphDataItems.isEmpty())
-            graphDataItems.add(new GraphDataItem("데이터 없음", 0));
-        if(graphDataItems1.isEmpty())
-            graphDataItems1.add(new GraphDataItem("데이터 없음", 0));
+
         for(int i=0; i<graphDataItems.size(); i++){
             Log.d("awdawd : ", graphDataItems.get(i).getDate());
             yvalues.add(new PieEntry(graphDataItems.get(i).getNum(), graphDataItems.get(i).getDate()));
@@ -186,6 +182,10 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
             Log.d("awdawd : ", graphDataItems1.get(i).getDate());
             yvalues1.add(new PieEntry(graphDataItems1.get(i).getNum(), graphDataItems1.get(i).getDate()));
         }
+        if(yvalues.isEmpty())
+            yvalues.add(new PieEntry(1, "데이터 없음"));
+        if(yvalues1.isEmpty())
+            yvalues1.add(new PieEntry(1, "데이터 없음"));
 
         PieDataSet dataSet = new PieDataSet(yvalues, "");
         PieData data = new PieData(dataSet);
@@ -195,7 +195,6 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         data.setValueFormatter(new PercentFormatter());
         data1.setValueFormatter(new PercentFormatter());
         // Default value
-        //data.setValueFormatter(new DefaultAxisValueFormatter(0));
         pieChart.setData(data);
         pieChart.setCenterText("5일간 대변 비율");
         pieChart.getDescription().setEnabled(false);
@@ -217,23 +216,52 @@ public class GrandStatusActivity extends AppCompatActivity implements OnChartVal
         data1.setValueTextSize(13f);
         data1.setValueTextColor(Color.DKGRAY);
 
-        pieChart.setOnChartValueSelectedListener(this);
-        pieChart1.setOnChartValueSelectedListener(this);
-
         pieChart.animateXY(1400, 1400);
         pieChart1.animateXY(1400, 1400);
+
+        //소변 그래프
+        pieChart1.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {     //선택
+                moveDetail(1);
+            }
+
+            @Override
+            public void onNothingSelected() {                       //미선택
+                moveDetail(1);
+            }
+        });
+        //대변 그래프
+        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                moveDetail(2);
+            }
+
+            @Override
+            public void onNothingSelected() {
+                moveDetail(2);
+            }
+        });
     }
-
-    @Override
-    public void onValueSelected(Entry e, Highlight h) {
-
+    private void moveDetail(int type){
+        switch(type){
+            case 1:{        //소변 세부사항
+                Intent intent = new Intent(GrandStatusActivity.this, PhysiologyDetailActivity.class);
+                intent.putExtra("type", 1);
+                intent.putExtra("grid", grId);
+                startActivity(intent);
+                break;
+            }
+            case 2:{        //대변 세부사항
+                Intent intent = new Intent(GrandStatusActivity.this, PhysiologyDetailActivity.class);
+                intent.putExtra("type", 2);
+                intent.putExtra("grid", grId);
+                startActivity(intent);
+                break;
+            }
+        }
     }
-
-    @Override
-    public void onNothingSelected() {
-
-    }
-
     private class Schedule_GetData extends AsyncTask<String, Void, String> {
         String errorString = null;
         String target;
