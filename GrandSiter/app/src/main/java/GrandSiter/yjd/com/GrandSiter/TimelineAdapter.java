@@ -57,14 +57,14 @@ class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHolder>{
         holder.tvDes.setText(item.getDes());
         holder.timelineView.setLineType(getLineType(position));
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
+        holder.view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onLongClick(View view) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 Log.d("click ", Integer.toString(holder.getAdapterPosition()));
                 alertDialogBuilder.setTitle("약 시간");
                 alertDialogBuilder
-                        .setMessage("약 시간을 제거 하시겠습니까?")
+                        .setMessage("제거 하시겠습니까?")
                         .setCancelable(false)
                         .setPositiveButton("예",
                                 new DialogInterface.OnClickListener() {
@@ -85,6 +85,7 @@ class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHolder>{
                                 });
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
+                return false;
             }
         });
         holder.timelineView.setFillMarker(true);

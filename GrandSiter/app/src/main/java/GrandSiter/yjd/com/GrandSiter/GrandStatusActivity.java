@@ -44,19 +44,18 @@ import java.util.List;
 
 public class GrandStatusActivity extends AppCompatActivity{
     private static final int MEDI=10, SCHE=11;
-    private LineChart mChart;
-    private int loadingFlag;
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter, adapter2;
     private RecyclerView recyclerView2;
     private TimelineAdapter adapter1;
     private List<TimeLineListItem> scheListItem;
     private List<TimeLineListItem> mediListItem;
-    private ProgressDialog dialog;
     private Button scheAdd;
     private Button mediAdd;
     private ArrayList<GraphDataItem> graphDataItems;
     private ArrayList<GraphDataItem> graphDataItems1;
+    private LoadingDialog loading;
     private VerticalStepView verticalStepView;
     String grName, grGender, grAge, grCh, grId;
     TextView elder_name;
@@ -64,14 +63,12 @@ public class GrandStatusActivity extends AppCompatActivity{
     @Override
     protected void onResume(){
         super.onResume();
-
-        loadingFlag = 0;    //loading 창 flag;
         setContentView(R.layout.activity_grand_status);
         elder_name = (TextView)findViewById(R.id.elder_name);
         scheAdd = (Button)findViewById(R.id.scheAdd);
         mediAdd = (Button)findViewById(R.id.mediAdd);
-
-        makeDialog();   //다이얼로그 생성
+        loading = new LoadingDialog(this, 4);
+        loading.makeDialog();
         getUserData();  //유저 데이터 가져오기
         setRecycleView();   //리사이클 뷰 설정
         buttonListen();
@@ -135,33 +132,6 @@ public class GrandStatusActivity extends AppCompatActivity{
         grCh = intent.getExtras().getString("ch");  //질환
         Log.d("grId : ", grId);
         //Log.d("name : ", grName);
-    }
-
-    //다이얼로그 출력
-    void makeDialog(){
-        dialog = new ProgressDialog(GrandStatusActivity.this);
-        dialog.setMax(100);
-        dialog.setMessage("정보");
-        dialog.setTitle("로딩 중");
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.show();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    while(loadingFlag >= 0){
-                        if(loadingFlag >=2 ){
-                            dialog.dismiss();
-                            break;
-                        }
-                    }
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
     //그래프 그리기
@@ -294,7 +264,7 @@ public class GrandStatusActivity extends AppCompatActivity{
                 recyclerView.setAdapter(adapter1);
                 adapter1.notifyDataSetChanged();
 
-                loadingFlag++;
+                loading.finishLoading();
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -393,7 +363,7 @@ public class GrandStatusActivity extends AppCompatActivity{
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            loadingFlag++;
+            loading.finishLoading();
         }
 
         @Override
@@ -481,6 +451,7 @@ public class GrandStatusActivity extends AppCompatActivity{
                     graphDataItems.add(new GraphDataItem(item.getString("date").substring(5), item.getInt("num")));
                 }
                 makeChart();
+                loading.finishLoading();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -572,8 +543,8 @@ public class GrandStatusActivity extends AppCompatActivity{
                     JSONObject item = jsonArray.getJSONObject(i);
                     graphDataItems1.add(new GraphDataItem(item.getString("date").substring(5), item.getInt("num")));
                 }
-
                 makeChart();
+                loading.finishLoading();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
